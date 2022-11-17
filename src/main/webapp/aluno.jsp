@@ -28,55 +28,45 @@
     </div>
   </nav>
     <div class="container my-5">
-        <h1 class="text-center">Cadastro de Projeto</h1>
-        <form action="cadastrar" id="form-projeto">
+        <h1 class="text-center">Cadastro de Alunos</h1>
+        <form action="cadastrar-aluno" id="form-projeto">
           <div class="mb-3">
-            <label for="inputTitulo" class="form-label">Título</label>
-            <input type="text" class="form-control" id="inputTitulo" name="inputTitulo" required>
+            <label for="inputMatricula" class="form-label">Matrícula</label>
+            <input type="number" class="form-control" id="inputMatricula" name="inputMatricula" required>
           </div>
           <div class="mb-3">
-            <label for="inputArea" class="form-label">Area</label>
-            <input type="text" class="form-control" id="inputArea" name="inputArea" required>
+            <label for="inputNome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="inputNome" name="inputNome" required>
           </div>
          <div class="mb-3">
-             <label for="inputCidade" class="form-label">Cidade</label>
-             <input type="text" class="form-control" id="inputCidade" name="inputCidade" required>
+             <label for="inputEmail" class="form-label">E-Mail</label>
+             <input type="email" class="form-control" id="inputEmail" name="inputTelefone" required>
          </div>
           <div class="mb-3">
-               <label for="inputEstado" class="form-label">Estado</label>
-               <input type="text" class="form-control" id="inputEstado" name="inputEstado" required>
-           </div>
-             <label for="descricaoInput">Descrição</label>
-            <div class="mb-3">
-                <textarea class="form-control"  id="descricaoInput"  name="descricaoInput" style="height: 100px" required></textarea>
-            </div>
-            <div class="mb-3">
-                 <label for="inputEstado" class="form-label">Estado</label>
-                 <input type="text" class="form-control" id="inputEstado" name="inputEstado" required>
-            </div>
-        <div class="row g-3 align-items-center">
-          <div class="col-auto">
-            <label for="qtdMembros" class="col-form-label">Quatidade de membros da equipe: </label>
+               <label for="inputCelular" class="form-label">Celular</label>
+               <input type="text" class="form-control" id="inputCelular" name="inputCelular" required>
+          <div class="mb-3">
+                 <label for="inputCurso" class="form-label">Curso</label>
+                 <input type="text" class="form-control" id="inputCurso" name="inputCurso" required>
           </div>
-          <div class="col-auto">
-            <input type="number" id="qtdMembros" name="qtdMembros" class="form-control" required>
+          <div class="mb-3">
+                 <label for="inputPassword" class="form-label">Senha</label>
+                 <input type="password" class="form-control" id="inputPassword" name="inputPassword" required>
           </div>
-          <div class="col-auto">
-             <button id ="inserir" type="button"class="btn btn-secondary">Inserir</button>
-          </div>
-          <br>
-           </div>
-        <div id="box">
-             <br>
-         </div>
-        </form>
-        <br>
+          </form>
          <button type="submit" form="form-projeto" class="btn btn-secondary">Submit</button>
     </div>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="assets/js/jquery.mask.min.js"</script>
     <script src="assets/js/script.js"</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+  <script>
+  $(document).ready(function(){
+    $('#inputCelular').mask('(00) 000-000-000');
+  });
+  </script>
+
   </body>
 </html>
