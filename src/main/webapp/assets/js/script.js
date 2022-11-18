@@ -12,14 +12,6 @@ function inserir(){
 
 }
 
-/*
-<div class="col-auto">
-<label for="qtdMembros" class="col-form-label">Quatidade de membros da equipe: </label>
- </div>
- <div class="col-auto">
-<input type="number" id="qtdMembros" name="qtdMembros" class="form-control" required>
- </div>
-*/
 function criarEstrutura(i){
 
     var div0 = document.createElement('div');

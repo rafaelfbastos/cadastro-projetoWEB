@@ -3,6 +3,7 @@ package repositories;
 
 import database.DAO;
 import models.AlunoModel;
+import org.hibernate.HibernateException;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class AlunoRepository {
     }
 
     public static void gravar(AlunoModel aluno){
-       dao.openTransaction().add(aluno).closeTransaction();
+        dao.openTransaction().add(aluno).closeTransaction();
     }
 
     public static AlunoModel findByMatricula(int matricula){
