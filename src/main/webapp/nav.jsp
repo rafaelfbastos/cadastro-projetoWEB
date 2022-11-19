@@ -8,7 +8,7 @@
         <div class="navbar-nav">
           <a class="nav-link active" aria-current="page" href="index">Cadastro Projetos</a>
           <a class="nav-link" href="projetos">Listar Projetos</a>
-          <a class="nav-link" href="#">Pesquisar Aluno</a>
+          <a class="nav-link" href="pesquisar-aluno">Pesquisar Aluno</a>
           <a class="nav-link" href="aluno">Cadastro de Aluno</a>
         </div>
       </div>

@@ -1,82 +1,133 @@
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="models.AlunoModel" %>
+<%@ page import="models.ProjetoModel" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 
-<%@ page import="java.util.HashMap"%>
-<%@ page import="java.util.Map"%>
+<%@ include file="head.jsp" %>
 
 <%
-    HashMap<String,String> alert = (HashMap<String,String>) request.getAttribute("alert");
-%>
-<!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cadastro de Projetos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  </head>
-  <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="index">Cadastro de Projetos</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#">Cadastro Projetos</a>
-          <a class="nav-link" href="projetos">Listar Projetos</a>
-          <a class="nav-link" href="#">Pesquisar Aluno</a>
-          <a class="nav-link" href="aluno">Cadastro de Aluno</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-    <div class="container my-5">
-        <%if(alert!=null && !alert.isEmpty()){%>
-            <div class="<%= alert.get("class")%>" role="alert">
-              <%= alert.get("mensagem")%>
-            </div>
-        <% }%>
-        <h1 class="text-center">Cadastro de Alunos</h1>
-        <form action="cadastrar-aluno" id="form-projeto" method="post">
-          <div class="mb-3">
-            <label for="inputMatricula" class="form-label">Matrícula</label>
-            <input type="number" class="form-control" id="inputMatricula" name="inputMatricula" required>
-          </div>
-          <div class="mb-3">
-            <label for="inputNome" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="inputNome" name="inputNome" required>
-          </div>
-         <div class="mb-3">
-             <label for="inputEmail" class="form-label">E-Mail</label>
-             <input type="email" class="form-control" id="inputEmail" name="inputTelefone" required>
-         </div>
-          <div class="mb-3">
-               <label for="inputCelular" class="form-label">Celular</label>
-               <input type="text" class="form-control" id="inputCelular" name="inputCelular" required>
-          <div class="mb-3">
-                 <label for="inputCurso" class="form-label">Curso</label>
-                 <input type="text" class="form-control" id="inputCurso" name="inputCurso" required>
-          </div>
-          <div class="mb-3">
-                 <label for="inputPassword" class="form-label">Senha</label>
-                 <input type="password" class="form-control" id="inputPassword" name="inputPassword" required>
-          </div>
-          </form>
-         <button type="submit" form="form-projeto" class="btn btn-secondary">Submit</button>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="assets/js/jquery.mask.min.js"</script>
-    <script src="assets/js/script.js"</script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-  <script>
-  $(document).ready(function(){
-    $('#inputCelular').mask('(00) 000-000-000');
-  });
-  </script>
+    HashMap<String, Object> alert = (HashMap<String, Object>) request.getAttribute("alert");
+    ArrayList<String> mensagens = new ArrayList<>();
+    String classe = "";
+    if (alert != null && !alert.isEmpty()) {
+        classe = (String) alert.get("class");
+        mensagens = (ArrayList<String>) alert.get("mensagem");
+    }
+    AlunoModel aluno = (AlunoModel) request.getAttribute("aluno");
+    ArrayList<ProjetoModel> projetos = (ArrayList<ProjetoModel>) request.getAttribute("projetos");
 
-  </body>
+%>
+
+<body>
+<%@ include file="nav.jsp" %>
+
+<div class="container my-5 ">
+    <%@ include file="alerta.jsp" %>
+    <h1 class="text-center">Pesquisar Aluno</h1>
+    <form id="pesquisar" class="row justify-content-center align-items-center my-5 g-3" method="post"
+          action="pesquisar-aluno">
+        <div class="col-auto me-3">
+            <h4>Matrícula:</h4>
+        </div>
+        <div class="col-auto">
+            <label for="inputMatricula" class="visually-hidden">Password</label>
+            <input type="number" class="form-control form-control-lg" name="inputMatricula" id="inputMatricula">
+        </div>
+        <div class="col-auto a">
+            <button type="submit" form="pesquisar" class="btn btn-outline-secondary btn-lg">Pesquisar</button>
+        </div>
+    </form>
+    <% if (aluno != null) {%>
+    <h4>Dados do Aluno: </h4>
+    <div class="border border-secondary border-opacity-50 my-5 p-2">
+        <div class="row justify-content-start p-2">
+            <div class="col-3">
+                <h5>Matrícula:</h5>
+            </div>
+            <div class="col-3">
+                <h5><%= aluno.getMatricula()%>
+                </h5>
+            </div>
+        </div>
+        <div class="row justify-content-start p-2">
+            <div class="col-3">
+                <h5>Nome:</h5>
+            </div>
+            <div class="col-3">
+                <h5><%= aluno.getNome()%>
+                </h5>
+            </div>
+        </div>
+        <div class="row justify-content-start p-2">
+            <div class="col-3">
+                <h5>Curso:</h5>
+            </div>
+            <div class="col-3">
+                <h5><%= aluno.getCurso()%>
+                </h5>
+            </div>
+        </div>
+        <div class="row justify-content-start p-2">
+            <div class="col-3">
+                <h5>E-mail:</h5>
+            </div>
+            <div class="col-3">
+                <h5><%= aluno.getEmail()%>
+                </h5>
+            </div>
+        </div>
+        <div class="row justify-content-start p-2">
+            <div class="col-3">
+                <h5>Telefone:</h5>
+            </div>
+            <div class="col-3">
+                <h5><%= aluno.getTelefone()%>
+                </h5>
+            </div>
+        </div>
+        <div class="row my-4">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <a href="atualizar-aluno?matricula=<%= aluno.getMatricula()%>" type="button"
+                   class="btn btn-outline-success ">
+                    Atualizar
+                </a>
+            </div>
+        </div>
+    </div>
+    <h1 class="text-center">Projetos envolvidos:</h1>
+    <table class="table table-secondary table-striped mt-4">
+        <thead>
+        <tr>
+            <th scope="col"><h6>Título:</h6></th>
+            <th scope="col"><h6>Área:</h6></th>
+            <th scope="col"><h6>Cidade:</h6></th>
+            <th scope="col"><h6>Estado:</h6></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%for (ProjetoModel projeto : projetos) {%>
+        <tr>
+            <td><%= projeto.getTitulo()%>
+            </td>
+            <td><%= projeto.getArea()%>
+            </td>
+            <td><%= projeto.getCidade()%>
+            </td>
+            <td><%= projeto.getEstado()%>
+            </td>
+        </tr>
+        <%}%>
+        </tbody>
+    </table>
+    <div class="row px-2">
+        <a href="listar-projeto-aluno?matricula=<%= aluno.getMatricula()%>" class="btn btn-outline-secondary btn-lg btn-block">Mais Detalhes</a>
+    </div>
+
+    <%}%>
+</div>
+
+<%@ include file="script.jsp" %>
+</body>
 </html>

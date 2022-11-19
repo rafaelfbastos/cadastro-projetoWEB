@@ -33,4 +33,8 @@ public class AlunoRepository {
         return new ArrayList<>(dao.findAll());
     }
 
+    public static void delete(AlunoModel aluno){
+        dao.openTransaction().delete(aluno).closeTransaction();
+    }
+
 }

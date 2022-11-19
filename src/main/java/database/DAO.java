@@ -52,6 +52,7 @@ public class DAO<E> {
     }
 
     public ArrayList<E> findAll(){
+
         String jpql = "select e from "+classe.getName()+" e";
         TypedQuery<E> query = em.createQuery(jpql,classe);
         return new ArrayList<>(query.getResultList());

@@ -19,7 +19,7 @@ public class ProjetoRepository {
     public static void add(ProjetoModel projeto) {
 
         dao.openTransaction().add(projeto).closeTransaction();
-        JOptionPane.showMessageDialog(null, "Projeto Cadastrado com sucesso", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     public static ArrayList<ProjetoModel> findAll() {
@@ -28,7 +28,6 @@ public class ProjetoRepository {
 
     public static void update(ProjetoModel projeto) {
         dao.openTransaction().update(projeto).closeTransaction();
-        JOptionPane.showMessageDialog(null, "Projeto Atualizado com sucesso", "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void delete(ProjetoModel projeto) {
