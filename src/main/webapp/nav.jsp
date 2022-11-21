@@ -1,3 +1,10 @@
+<%
+    String path = request.getServletPath();
+    System.out.printf(path);
+%>
+
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="index">Cadastro de Projetos</a>
@@ -6,10 +13,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="index">Cadastro Projetos</a>
-          <a class="nav-link" href="projetos">Listar Projetos</a>
-          <a class="nav-link" href="pesquisar-aluno">Pesquisar Aluno</a>
-          <a class="nav-link" href="aluno">Cadastro de Aluno</a>
+          <a class="nav-link <%= (path.contains("index"))?"active":""%>" aria-current="page" href="index">Cadastro Projetos</a>
+          <a class="nav-link <%= (path.contains("projetos"))?"active":""%>" href="projetos">Listar Projetos</a>
+          <a class="nav-link <%= (path.equals("/aluno.jsp"))?"active":""%>" href="pesquisar-aluno">Pesquisar Aluno</a>
+          <a class="nav-link <%= (path.contains("aluno-cadastro"))?"active":""%>" href="aluno">Cadastro de Aluno</a>
         </div>
       </div>
     </div>
