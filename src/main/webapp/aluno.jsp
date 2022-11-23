@@ -33,7 +33,7 @@
         </div>
         <div class="col-auto">
             <label for="inputMatricula" class="visually-hidden">Password</label>
-            <input type="number" class="form-control form-control-lg" name="inputMatricula" id="inputMatricula">
+            <input type="text" class="form-control form-control-lg" name="inputMatricula" id="inputMatricula">
         </div>
         <div class="col-auto a">
             <button type="submit" form="pesquisar" class="btn btn-outline-secondary btn-lg">Pesquisar</button>
@@ -127,7 +127,13 @@
 
     <%}%>
 </div>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.mask.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#inputMatricula').mask('000000000');
+    });
+</script>
 <%@ include file="script.jsp" %>
 </body>
 </html>

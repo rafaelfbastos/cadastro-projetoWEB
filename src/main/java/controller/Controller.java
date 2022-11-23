@@ -17,11 +17,12 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 
-@WebServlet(urlPatterns= {"/Controller", "/projetos", "/index", "/aluno",
-                            "/cadastrar-aluno","/apagar-projeto","/cadastrar",
-                            "/atualizar-projeto","/atualizar","/pesquisar-aluno",
-                            "/atualizar-aluno","/listar-projeto-aluno"
-                            })
+@WebServlet(urlPatterns = {"/Controller", "/projetos", "/index", "/aluno",
+        "/cadastrar-aluno", "/apagar-projeto", "/cadastrar",
+        "/atualizar-projeto", "/atualizar", "/pesquisar-aluno",
+        "/atualizar-aluno", "/listar-projeto-aluno", "/sobre",
+        "/apagar-aluno"
+})
 public class Controller extends HttpServlet {
     private Map<String, Object> alert;
     private ArrayList<String> mensagens;
@@ -41,30 +42,31 @@ public class Controller extends HttpServlet {
         } else if (path.equals("/cadastrar-aluno")) {
             cadastrarAluno(req, resp);
         } else if (path.equals("/apagar-projeto")) {
-            apagarProjeto(req,resp);
-        }else if (path.equals("/atualizar-projeto")) {
+            apagarProjeto(req, resp);
+        } else if (path.equals("/atualizar-projeto")) {
             String id = req.getParameter("id");
             ProjetoModel projeto = ProjetoRepository.dao.findByID(id);
-            req.setAttribute("projeto",projeto);
+            req.setAttribute("projeto", projeto);
             RequestDispatcher rd = req.getRequestDispatcher("atualizar-projeto.jsp");
-            rd.forward(req,resp);
-        }else if (path.equals("/pesquisar-aluno")) {
+            rd.forward(req, resp);
+        } else if (path.equals("/pesquisar-aluno")) {
             resp.sendRedirect("aluno.jsp");
-        }
-        else if (path.equals("/atualizar-aluno")) {
+        } else if (path.equals("/atualizar-aluno")) {
             int matricula = Integer.parseInt(req.getParameter("matricula"));
             AlunoModel aluno = AlunoRepository.findByMatricula(matricula);
 
-            req.setAttribute("aluno",aluno);
+            req.setAttribute("aluno", aluno);
             RequestDispatcher rd = req.getRequestDispatcher("atualizar-aluno.jsp");
-            rd.forward(req,resp);
-        }
-        else if (path.equals("/listar-projeto-aluno")) {
-            listarProjetosAluno(req,resp);
+            rd.forward(req, resp);
+        } else if (path.equals("/listar-projeto-aluno")) {
+            listarProjetosAluno(req, resp);
+        } else if (path.equals("/sobre")) {
+            resp.sendRedirect("sobre.jsp");
+        } else if (path.equals("/apagar-aluno")) {
+            apagarAluno(req, resp);
         }
 
     }
-
 
 
     @Override
@@ -72,26 +74,20 @@ public class Controller extends HttpServlet {
 
         String path = req.getServletPath();
 
-       if (path.equals("/aluno")) {
+        if (path.equals("/aluno")) {
             resp.sendRedirect("aluno-cadastro.jsp");
-        }
-        else if (path.equals("/cadastrar-aluno")) {
+        } else if (path.equals("/cadastrar-aluno")) {
             cadastrarAluno(req, resp);
-        }
-        else if (path.equals("/cadastrar")) {
+        } else if (path.equals("/cadastrar")) {
             cadastrarProjeto(req, resp);
+        } else if (path.equals("/atualizar")) {
+            atualizarProjeto(req, resp);
+        } else if (path.equals("/pesquisar-aluno")) {
+            pesquisarAluno(req, resp);
+        } else if (path.equals("/atualizar-aluno")) {
+            atualizarAluno(req, resp);
         }
-       else if (path.equals("/atualizar")) {
-           atualizarProjeto(req, resp);
-       }
-       else if (path.equals("/pesquisar-aluno")) {
-          pesquisarAluno(req, resp);
-       }
-       else if (path.equals("/atualizar-aluno")) {
-           atualizarAluno(req, resp);
-       }
     }
-
 
 
     private void listarProjetos(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -149,28 +145,26 @@ public class Controller extends HttpServlet {
         );
 
         ArrayList<Integer> matriculas = new ArrayList<>(
-                inputs.subList(5,inputs.size()).stream().filter(s -> !s.isEmpty()).map(Integer::parseInt).toList()
+                inputs.subList(5, inputs.size()).stream().filter(s -> !s.isEmpty()).map(Integer::parseInt).toList()
         );
         mensagens = new ArrayList<>();
         Set<AlunoModel> alunos = new HashSet<>();
-        matriculas.forEach(matricula->{
+        matriculas.forEach(matricula -> {
             AlunoModel aluno = AlunoRepository.findByMatricula(matricula);
-            if(aluno!=null){
+            if (aluno != null) {
                 alunos.add(aluno);
-            }
-            else{
-                mensagens.add(String.format("O aluno de matrícula %d precisa ser cadastrado:",matricula));
+            } else {
+                mensagens.add(String.format("O aluno de matrícula %d precisa ser cadastrado:", matricula));
             }
         });
-        if(mensagens.size()>0){
+        if (mensagens.size() > 0) {
             alert.put("class", "alert alert-danger");
             alert.put("mensagem", mensagens);
 
             req.setAttribute("alert", alert);
             RequestDispatcher rd = req.getRequestDispatcher("aluno-cadastro.jsp");
             rd.forward(req, resp);
-        }
-        else{
+        } else {
             ProjetoModel projeto = new ProjetoModel();
             projeto.setTitulo(inputs.get(0));
             projeto.setArea(inputs.get(1));
@@ -231,29 +225,28 @@ public class Controller extends HttpServlet {
         );
 
         ArrayList<Integer> matriculas = new ArrayList<>(
-                inputs.subList(6,inputs.size()-1).stream().filter(s -> !s.isEmpty()).map(Integer::parseInt).toList()
+                inputs.subList(6, inputs.size() - 1).stream().filter(s -> !s.isEmpty()).map(Integer::parseInt).toList()
         );
 
         mensagens = new ArrayList<>();
 
         Set<AlunoModel> alunos = new HashSet<>();
-        matriculas.forEach(matricula->{
+        matriculas.forEach(matricula -> {
             AlunoModel aluno = AlunoRepository.findByMatricula(matricula);
-            if(aluno!=null){
+            if (aluno != null) {
                 alunos.add(aluno);
-            }
-            else{
-                mensagens.add(String.format("O aluno de matrícula %d precisa ser cadastrado:",matricula));
+            } else {
+                mensagens.add(String.format("O aluno de matrícula %d precisa ser cadastrado:", matricula));
             }
         });
-        if(mensagens.size()>0){
+        if (mensagens.size() > 0) {
             alert.put("class", "alert alert-danger");
             alert.put("mensagem", mensagens);
 
             req.setAttribute("alert", alert);
             RequestDispatcher rd = req.getRequestDispatcher("aluno-cadastro.jsp");
             rd.forward(req, resp);
-        }else {
+        } else {
 
             ProjetoModel projeto = ProjetoRepository.dao.findByID(inputs.get(0));
 
@@ -261,7 +254,7 @@ public class Controller extends HttpServlet {
                     projeto.getAlunos().stream().map(AlunoModel::getSenha).toList()
             );
 
-            if(senhas.contains(inputs.get(inputs.size()-1).hashCode())){
+            if (senhas.contains(inputs.get(inputs.size() - 1).hashCode())) {
                 projeto.setTitulo(inputs.get(1));
                 projeto.setArea(inputs.get(2));
                 projeto.setCidade(inputs.get(3));
@@ -281,8 +274,7 @@ public class Controller extends HttpServlet {
 
                 RequestDispatcher rd = req.getRequestDispatcher("projetos.jsp");
                 rd.forward(req, resp);
-            }
-            else{
+            } else {
                 mensagens.add("Senha incorreta");
                 alert.put("class", "alert alert-danger");
                 alert.put("mensagem", mensagens);
@@ -308,22 +300,21 @@ public class Controller extends HttpServlet {
 
         AlunoModel aluno = AlunoRepository.findByMatricula(matricula);
 
-        if(aluno!=null){
+        if (aluno != null) {
 
             ArrayList<ProjetoModel> projetos = new ArrayList<>(aluno.getProjetos());
-            req.setAttribute("aluno",aluno);
-            req.setAttribute("projetos",projetos);
+            req.setAttribute("aluno", aluno);
+            req.setAttribute("projetos", projetos);
             RequestDispatcher rd = req.getRequestDispatcher("aluno.jsp");
-            rd.forward(req,resp);
-        }
-        else{
-            alert.put("class","alert alert-danger");
+            rd.forward(req, resp);
+        } else {
+            alert.put("class", "alert alert-danger");
             mensagens.add("Aluno não encontrado.");
             alert.put("mensagem", mensagens);
 
-            req.setAttribute("alert",alert);
+            req.setAttribute("alert", alert);
             RequestDispatcher rd = req.getRequestDispatcher("aluno.jsp");
-            rd.forward(req,resp);
+            rd.forward(req, resp);
 
         }
 
@@ -342,7 +333,7 @@ public class Controller extends HttpServlet {
         if (AlunoRepository.findByMatricula(matricula) != null) {
             AlunoModel aluno = AlunoRepository.findByMatricula(matricula);
 
-            if(aluno.getSenha()==inputs.get(5).hashCode()){
+            if (aluno.getSenha() == inputs.get(5).hashCode()) {
                 aluno.setNome(inputs.get(1));
                 aluno.setEmail(inputs.get(2));
                 aluno.setTelefone(inputs.get(3));
@@ -352,17 +343,17 @@ public class Controller extends HttpServlet {
                 mensagens = new ArrayList<>();
                 mensagens.add("Cadastro atualizado com sucesso.");
                 alert.put("mensagem", mensagens);
-                req.setAttribute("aluno",aluno);
+                req.setAttribute("aluno", aluno);
                 req.setAttribute("alert", alert);
                 RequestDispatcher rd = req.getRequestDispatcher("aluno.jsp");
                 rd.forward(req, resp);
-            }else {
+            } else {
 
                 alert.put("class", "alert alert-danger");
                 mensagens = new ArrayList<>();
                 mensagens.add("Senha não confere.");
                 alert.put("mensagem", mensagens);
-                req.setAttribute("aluno",aluno);
+                req.setAttribute("aluno", aluno);
                 req.setAttribute("alert", alert);
                 RequestDispatcher rd = req.getRequestDispatcher("atualizar-aluno.jsp");
                 rd.forward(req, resp);
@@ -392,4 +383,33 @@ public class Controller extends HttpServlet {
 
     }
 
+    private void apagarAluno(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        int matricula = Integer.parseInt(req.getParameter("matricula"));
+        int senha = req.getParameter("senha").hashCode();
+
+        AlunoModel aluno = AlunoRepository.findByMatricula(matricula);
+        if (aluno.getSenha() == senha) {
+            AlunoRepository.delete(aluno);
+
+            alert.put("class", "alert alert-success");
+            mensagens = new ArrayList<>();
+            mensagens.add("Cadastro apagado com sucesso.");
+            alert.put("mensagem", mensagens);
+            req.setAttribute("alert", alert);
+            RequestDispatcher rd = req.getRequestDispatcher("aluno.jsp");
+            rd.forward(req, resp);
+        } else {
+
+            alert.put("class", "alert alert-danger");
+            mensagens = new ArrayList<>();
+            mensagens.add("Senha não confere.");
+            alert.put("mensagem", mensagens);
+            req.setAttribute("aluno", aluno);
+            req.setAttribute("alert", alert);
+            RequestDispatcher rd = req.getRequestDispatcher("atualizar-aluno.jsp");
+            rd.forward(req, resp);
+
+        }
+    }
 }

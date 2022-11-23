@@ -22,7 +22,7 @@ function criarEstrutura(i){
     var label = document.createElement('label');
     label.setAttribute('class','col-form-label');
     label.setAttribute('for','matricula'+i);
-    label.textContent = "Matrícula";
+    label.textContent = "Matrícula ";
     div1.appendChild(label);
     var div2 = document.createElement('div');
     div2.setAttribute('class','col-auto');

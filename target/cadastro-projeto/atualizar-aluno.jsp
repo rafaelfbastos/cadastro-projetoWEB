@@ -55,14 +55,20 @@
         <div class="d-grid gap-2 col-6 mx-auto">
             <button type="submit" form="form-aluno" class="btn btn-outline-success btn-lg">Atualizar Cadastro</button>
         </div>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="button" onclick="apagar()" form="form-aluno" class="btn btn-outline-danger btn-lg">Apagar Cadastro</button>
+        </div>
     </div>
 
 </div>
 
 <%@ include file="script.jsp" %>
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.mask.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#inputCelular').mask('(00) 000-000-000');
+        $('#inputMatricula').mask('000000000');
     });
 
     function apagar(){

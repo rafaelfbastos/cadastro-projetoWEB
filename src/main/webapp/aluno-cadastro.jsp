@@ -26,7 +26,7 @@
     <form action="cadastrar-aluno" id="form-projeto" method="post">
         <div class="mb-3">
             <label for="inputMatricula" class="form-label">Matrícula</label>
-            <input type="number" class="form-control" id="inputMatricula" name="inputMatricula" required>
+            <input type="text" class="form-control" id="inputMatricula" name="inputMatricula" required>
         </div>
         <div class="mb-3">
             <label for="inputNome" class="form-label">Nome</label>
@@ -56,11 +56,14 @@
 </div>
 
 <%@ include file="script.jsp" %>
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.mask.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#inputCelular').mask('(00) 000-000-000');
+        $('#inputMatricula').mask('000000000');
+
     });
 </script>
-
 </body>
 </html>

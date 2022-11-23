@@ -2,7 +2,6 @@ package models;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,7 +15,7 @@ public class AlunoModel {
     private String email;
     private String telefone;
     private String curso;
-    @ManyToMany(mappedBy = "alunos")
+    @ManyToMany(mappedBy = "alunos" ,cascade = {CascadeType.ALL})
     private List<ProjetoModel> projetos;
     private int senha;
 
